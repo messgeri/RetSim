@@ -22,14 +22,12 @@ namespace RetSimDesktop
     public partial class GearSlotSelect : UserControl
     {
         private static GearSim gearSimWorker = new();
-
+        public delegate void GearSearchEventHandler(int slotID, string pattern);
+        public event GearSearchEventHandler GearSearched;
         public int SlotID { get; set; }
         public IEnumerable<DisplayGear> SlotList
         {
-            get
-            {
-                return (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
-            }
+            get => (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
             set => SetValue(SlotListProperty, value);
         }
 
@@ -37,18 +35,14 @@ namespace RetSimDesktop
         {
             if (e.Key == Key.Enter)
             {
-                var gearList = (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
-                SlotList = gearList.Where(display => display.Item.Name.Contains(SearchBar.Text, StringComparison.InvariantCultureIgnoreCase));
+                GearSearched?.Invoke(SlotID, SearchBar.Text);
             }
         }
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
             {
-                await Dispatcher.BeginInvoke(() =>
-                {
-                    SlotList = SlotList.Where(display => display.Item.Name.Contains(SearchBar.Text, StringComparison.InvariantCultureIgnoreCase));
-                }); 
+                GearSearched?.Invoke(SlotID, SearchBar.Text);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 
 namespace RetSimDesktop
 {
@@ -14,7 +15,7 @@ namespace RetSimDesktop
     /// 
     public partial class GearSelect : UserControl
     {
-        private Dictionary<Slot, List<GearSlotSelect>> SelectorBySlot = new();
+        private Dictionary<Slot, List<GearSlotSelect>> SelectorBySlot = new(); //Does it really have to be a list? 
         public Dictionary<Slot, List<DisplayGear>> ShownGear { get; set; }
 
         public GearSelect()
@@ -42,6 +43,49 @@ namespace RetSimDesktop
             SelectorBySlot.Add(Slot.Finger, new() { Finger1Select, Finger2Select });
             SelectorBySlot.Add(Slot.Trinket, new() { Trinket1Select, Trinket2Select });
             SelectorBySlot.Add(Slot.Relic, new() { RelicSelect });
+
+            foreach(var slot in SelectorBySlot.Values)
+            {
+                foreach (var selector in slot)
+                {
+                    selector.GearSearched += SearchResult;
+                }
+            }
+        }
+
+        private void SearchResult(int slotID, string pattern)
+        {
+            Slot slot = (Slot)slotID; 
+            if(DataContext is RetSimUIModel retSimUIModel)
+            {
+                List<DisplayGear> list = new List<DisplayGear>();
+                if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.GearByPhases[slot].ContainsKey(1))
+                {
+                    list.AddRange(retSimUIModel.GearByPhases[slot][1].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
+                }
+                if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.GearByPhases[slot].ContainsKey(2))
+                {
+                    list.AddRange(retSimUIModel.GearByPhases[slot][2].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
+                }
+                if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.GearByPhases[slot].ContainsKey(3))
+                {
+                    list.AddRange(retSimUIModel.GearByPhases[slot][3].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
+                }
+                if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.GearByPhases[slot].ContainsKey(4))
+                {
+                    list.AddRange(retSimUIModel.GearByPhases[slot][4].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
+                }
+                if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.GearByPhases[slot].ContainsKey(5))
+                {
+                    list.AddRange(retSimUIModel.GearByPhases[slot][5].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
+                }
+                ShownGear[slot] = list;
+                SelectorBySlot[slot][0].SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
+                {
+                    Source = this,
+                    Mode = BindingMode.OneWay
+                });
+            }
         }
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
