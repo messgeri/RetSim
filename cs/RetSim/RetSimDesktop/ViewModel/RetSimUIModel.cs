@@ -141,7 +141,6 @@ namespace RetSimDesktop.ViewModel
             {
                 HoverItemID = 0,
             };
-
         }
 
         public void Reset()
@@ -225,7 +224,6 @@ namespace RetSimDesktop.ViewModel
             _SelectedGear.Finger2Enchant = _SelectedGear.Finger2Enchant != null ? Enchants[_SelectedGear.Finger2Enchant.ID] : _EnchantsBySlot[Slot.Finger].Where(e => e.ID == -1).First();
             _SelectedGear.WeaponEnchant = _SelectedGear.WeaponEnchant != null ? Enchants[_SelectedGear.WeaponEnchant.ID] : _EnchantsBySlot[Slot.Weapon].Where(e => e.ID == -1).First();
         }
-
 
         [JsonIgnore]
         public Dictionary<WeaponType, Dictionary<int, List<DisplayWeapon>>> WeaponsByPhases

@@ -7,6 +7,7 @@ using RetSimDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -350,7 +351,6 @@ namespace RetSimDesktop
                 retSimUIModel.TooltipSettings.HoverItemID = 0;
             }
         }
-
     }
 
     public class WeaponSpeedConverter : IValueConverter

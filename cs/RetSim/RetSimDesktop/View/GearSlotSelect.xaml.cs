@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Linq;
 
 namespace RetSimDesktop
 {
@@ -25,8 +26,30 @@ namespace RetSimDesktop
         public int SlotID { get; set; }
         public IEnumerable<DisplayGear> SlotList
         {
-            get => (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
+            get
+            {
+                return (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
+            }
             set => SetValue(SlotListProperty, value);
+        }
+
+        private void SearchBar_ConfirmChange(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var gearList = (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
+                SlotList = gearList.Where(display => display.Item.Name.Contains(SearchBar.Text, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
+            {
+                await Dispatcher.BeginInvoke(() =>
+                {
+                    SlotList = SlotList.Where(display => display.Item.Name.Contains(SearchBar.Text, StringComparison.InvariantCultureIgnoreCase));
+                }); 
+            }
         }
 
         public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
@@ -89,7 +112,7 @@ namespace RetSimDesktop
             gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
             {
                 Source = this,
-                Mode = BindingMode.OneWay,
+                Mode = BindingMode.TwoWay,
             });
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
