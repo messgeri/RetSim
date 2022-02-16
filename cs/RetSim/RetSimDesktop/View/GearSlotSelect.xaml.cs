@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Linq;
+using System.ComponentModel;
 
 namespace RetSimDesktop
 {
@@ -22,8 +23,9 @@ namespace RetSimDesktop
     public partial class GearSlotSelect : UserControl
     {
         private static GearSim gearSimWorker = new();
-        public delegate void GearSearchEventHandler(int slotID, string pattern);
+        public delegate void GearSearchEventHandler(GearSlotSelect vm, int slotID, string pattern);
         public event GearSearchEventHandler GearSearched;
+
         public int SlotID { get; set; }
         public IEnumerable<DisplayGear> SlotList
         {
@@ -35,15 +37,26 @@ namespace RetSimDesktop
         {
             if (e.Key == Key.Enter)
             {
-                GearSearched?.Invoke(SlotID, SearchBar.Text);
+                GearSearched?.Invoke(this, SlotID, SearchBar.Text);
             }
         }
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
             {
-                GearSearched?.Invoke(SlotID, SearchBar.Text);
+                GearSearched?.Invoke(this, SlotID, SearchBar.Text);
             }
+        }
+
+        private bool SearchItems(object e)
+        {
+            var obj = e as DisplayGear;
+            if(obj != null)
+            {
+                if(obj.Item.Name.Contains(SearchBar.Text)) return true;
+                else return false;
+            }
+            return false;
         }
 
         public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
@@ -102,11 +115,12 @@ namespace RetSimDesktop
                     }
                 }
             };
-
+            
             gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
             {
                 Source = this,
                 Mode = BindingMode.TwoWay,
+                IsAsync = true
             });
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")

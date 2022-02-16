@@ -15,7 +15,7 @@ namespace RetSimDesktop
     /// 
     public partial class GearSelect : UserControl
     {
-        private Dictionary<Slot, List<GearSlotSelect>> SelectorBySlot = new(); //Does it really have to be a list? 
+        private Dictionary<Slot, List<GearSlotSelect>> SelectorBySlot = new(); 
         public Dictionary<Slot, List<DisplayGear>> ShownGear { get; set; }
 
         public GearSelect()
@@ -53,10 +53,15 @@ namespace RetSimDesktop
             }
         }
 
-        private void SearchResult(int slotID, string pattern)
+        private void SearchResult(GearSlotSelect vm, int slotID, string pattern)
         {
-            Slot slot = (Slot)slotID; 
-            if(DataContext is RetSimUIModel retSimUIModel)
+            Slot slot = (Slot)slotID;
+            vm.SlotList = RunSearch(slot, pattern);
+        }
+
+        private IEnumerable<DisplayGear> RunSearch(Slot slot, string pattern)
+        {
+            if (DataContext is RetSimUIModel retSimUIModel)
             {
                 List<DisplayGear> list = new List<DisplayGear>();
                 if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.GearByPhases[slot].ContainsKey(1))
@@ -80,11 +85,16 @@ namespace RetSimDesktop
                     list.AddRange(retSimUIModel.GearByPhases[slot][5].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
                 }
                 ShownGear[slot] = list;
-                SelectorBySlot[slot][0].SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
+                /*vm.SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
                 {
                     Source = this,
-                    Mode = BindingMode.OneWay
-                });
+                    Mode = BindingMode.TwoWay,
+                    IsAsync = true
+                });*/
+                foreach(var item in list)
+                {
+                    yield return item;
+                }
             }
         }
 
