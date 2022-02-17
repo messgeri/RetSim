@@ -141,43 +141,29 @@ namespace RetSimDesktop
                 Mode = BindingMode.TwoWay
             });
 
-            StatConverter statConverter = new();
-
-            Binding strBinding = new("Item.Stats[" + StatName.Strength + "]");
-            strBinding.Converter = statConverter;
+            Binding strBinding = new("Str");
             StrColumn.Binding = strBinding;
-            Binding apBinding = new("Item.Stats[" + StatName.AttackPower + "]");
-            apBinding.Converter = statConverter;
+            Binding apBinding = new("AP");
             APColumn.Binding = apBinding;
-            Binding agiBinding = new("Item.Stats[" + StatName.Agility + "]");
-            agiBinding.Converter = statConverter;
+            Binding agiBinding = new("Agi");
             AgiColumn.Binding = agiBinding;
-            Binding critBinding = new("Item.Stats[" + StatName.CritRating + "]");
-            critBinding.Converter = statConverter;
+            Binding critBinding = new("Crit");
             CritColumn.Binding = critBinding;
-            Binding hitBinding = new("Item.Stats[" + StatName.HitRating + "]");
-            hitBinding.Converter = statConverter;
+            Binding hitBinding = new("Hit");
             HitColumn.Binding = hitBinding;
-            Binding hasteBinding = new("Item.Stats[" + StatName.HasteRating + "]");
-            hasteBinding.Converter = statConverter;
+            Binding hasteBinding = new("Haste");
             HasteColumn.Binding = hasteBinding;
-            Binding expBinding = new("Item.Stats[" + StatName.ExpertiseRating + "]");
-            expBinding.Converter = statConverter;
+            Binding expBinding = new("Exp");
             ExpColumn.Binding = expBinding;
-            Binding apenBinding = new("Item.Stats[" + StatName.ArmorPenetration + "]");
-            apenBinding.Converter = statConverter;
+            Binding apenBinding = new("ArPen");
             APenColumn.Binding = apenBinding;
-            Binding staBinding = new("Item.Stats[" + StatName.Stamina + "]");
-            staBinding.Converter = statConverter;
+            Binding staBinding = new("Stam");
             StaColumn.Binding = staBinding;
-            Binding intBinding = new("Item.Stats[" + StatName.Intellect + "]");
-            intBinding.Converter = statConverter;
+            Binding intBinding = new("Intellect");
             IntColumn.Binding = intBinding;
-            Binding mp5Binding = new("Item.Stats[" + StatName.ManaPer5 + "]");
-            mp5Binding.Converter = statConverter;
+            Binding mp5Binding = new("MP5");
             MP5Column.Binding = mp5Binding;
-            Binding spBinding = new("Item.Stats[" + StatName.SpellPower + "]");
-            spBinding.Converter = statConverter;
+            Binding spBinding = new("SP");
             SPColumn.Binding = spBinding;
         }
 

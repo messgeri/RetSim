@@ -23,6 +23,19 @@ namespace RetSimDesktop.Model
         private BitmapImage gem3;
         private string socketBonus;
 
+        private string str;
+        private string ap;
+        private string agi;
+        private string crit;
+        private string hit;
+        private string haste;
+        private string exp;
+        private string arpen;
+        private string stam;
+        private string intellect;
+        private string mp5;
+        private string sp;
+
         public float DPS
         {
             get { return dps; }
@@ -53,18 +66,21 @@ namespace RetSimDesktop.Model
             }
         }
 
+        #region Display
         public SolidColorBrush Quality
         {
             get => quality;
-            set => SetProperty(ref quality, value); 
+            set => SetProperty(ref quality, value);
         }
 
         public BitmapImage Image
         {
             get => image;
-            set => SetProperty(ref image, value);    
-        }
+            set => SetProperty(ref image, value);
+        } 
+        #endregion
 
+        #region Gems and Sockets
         public SolidColorBrush Socket1
         {
             get => socket1;
@@ -106,6 +122,70 @@ namespace RetSimDesktop.Model
             get => socketBonus;
             set => SetProperty(ref socketBonus, value);
         }
+        #endregion
+
+        #region Stats
+        public string Str
+        {
+            get => str;
+            set => SetProperty(ref str, value);
+        }
+        public string AP
+        {
+            get => ap;
+            set => SetProperty(ref ap, value);
+        }
+        public string Agi
+        {
+            get => agi;
+            set => SetProperty(ref agi, value);
+        }
+        public string Crit
+        {
+            get => crit;
+            set => SetProperty(ref crit, value);
+        }
+        public string Hit
+        {
+            get => hit;
+            set => SetProperty(ref hit, value);
+        }
+        public string Haste
+        {
+            get => haste;
+            set => SetProperty(ref haste, value);
+        }
+        public string Exp
+        {
+            get => exp;
+            set => SetProperty(ref exp, value);
+        }
+        public string ArPen
+        {
+            get => arpen;
+            set => SetProperty(ref arpen, value);  
+        }
+        public string Stam 
+        {
+            get => stam;
+            set => SetProperty(ref stam, value);
+        }
+        public string Intellect 
+        {
+            get => intellect;
+            set => SetProperty(ref intellect, value);
+        }
+        public string MP5
+        {
+            get => mp5;
+            set => SetProperty(ref mp5, value);
+        }
+        public string SP
+        {
+            get => sp;
+            set => SetProperty(ref sp, value);
+        }
+        #endregion
 
         public void RefreshGems()
         {
@@ -155,6 +235,25 @@ namespace RetSimDesktop.Model
             Gem3 = SocketToImageConverter(Item.Socket3);
 
             SocketBonus = SocketBonusConverter();
+
+            Str = StatConverter(Item.Stats[StatName.Strength]);
+            AP = StatConverter(Item.Stats[StatName.AttackPower]);
+            Agi = StatConverter(Item.Stats[StatName.Agility]);
+            Crit = StatConverter(Item.Stats[StatName.CritRating]);
+            Hit = StatConverter(Item.Stats[StatName.HitRating]);
+            Haste = StatConverter(Item.Stats[StatName.HasteRating]);
+            Exp = StatConverter(Item.Stats[StatName.ExpertiseRating]);
+            ArPen = StatConverter(Item.Stats[StatName.ArmorPenetration]);
+            Stam = StatConverter(Item.Stats[StatName.Stamina]);
+            Intellect = StatConverter(Item.Stats[StatName.Intellect]);
+            MP5 = StatConverter(Item.Stats[StatName.ManaPer5]);
+            SP = StatConverter(Item.Stats[StatName.SpellPower]);
+
+        }
+
+        private string StatConverter(float value)
+        {
+            return value.ToString("0;;' '");
         }
 
         private SolidColorBrush SocketColorBrushConverter(Socket value)
