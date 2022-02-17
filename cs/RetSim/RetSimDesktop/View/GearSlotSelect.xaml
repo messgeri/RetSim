@@ -62,7 +62,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1" BorderBrush="Black">
-                                <Image Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.ID, Converter={StaticResource ItemToImageConverter}}" />
+                                <Image Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Image}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -84,8 +84,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket1, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket1, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket1}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem1}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -94,8 +94,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket2, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket2, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket2}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem2}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -104,8 +104,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket3, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket3, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket3}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem3}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -113,7 +113,7 @@
                 <DataGridTemplateColumn MinWidth="48" CanUserReorder="False" CanUserSort="False" Header="Bonus">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item, Converter={StaticResource SocketBonusConverter}}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
+                            <TextBlock Text="{Binding SocketBonus}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

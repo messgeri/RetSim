@@ -248,6 +248,7 @@ namespace RetSimDesktop
 
                                     retSimUIModel.SelectedGear.OnPropertyChanged("");
                                     displayGear.OnPropertyChanged("");
+                                    displayGear.RefreshGems();
                                 }
                                 e.Handled = true;
                             }
