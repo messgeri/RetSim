@@ -85,12 +85,7 @@ namespace RetSimDesktop
                     list.AddRange(retSimUIModel.GearByPhases[slot][5].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
                 }
                 ShownGear[slot] = list;
-                /*vm.SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
-                {
-                    Source = this,
-                    Mode = BindingMode.TwoWay,
-                    IsAsync = true
-                });*/
+
                 foreach(var item in list)
                 {
                     yield return item;
