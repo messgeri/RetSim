@@ -20,17 +20,17 @@ namespace RetSimDesktop
     /// </summary>
     public partial class WeaponSlotSelect : UserControl
     {
-        private static WeaponSim weaponSimWorker = new();
+        //private static WeaponSim weaponSimWorker = new();
 
-        public List<DisplayWeapon> WeaponList
+        public List<DisplayGear> WeaponList
         {
-            get => (List<DisplayWeapon>)GetValue(WeaponListProperty);
+            get => (List<DisplayGear>)GetValue(WeaponListProperty);
             set => SetValue(WeaponListProperty, value);
         }
 
         public static readonly DependencyProperty WeaponListProperty = DependencyProperty.Register(
             "WeaponList",
-            typeof(List<DisplayWeapon>),
+            typeof(List<DisplayGear>),
             typeof(WeaponSlotSelect));
 
         public List<Enchant> WeaponEnchantList
@@ -44,9 +44,9 @@ namespace RetSimDesktop
             typeof(List<Enchant>),
             typeof(WeaponSlotSelect));
 
-        public DisplayWeapon SelectedItem
+        public DisplayGear SelectedItem
         {
-            get => (DisplayWeapon)GetValue(SelectedItemProperty);
+            get => (DisplayGear)GetValue(SelectedItemProperty);
             set
             {
                 SetValue(SelectedItemProperty, value);
@@ -55,7 +55,7 @@ namespace RetSimDesktop
 
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
             "SelectedItem",
-            typeof(DisplayWeapon),
+            typeof(DisplayGear),
             typeof(WeaponSlotSelect),
             new PropertyMetadata(null, CheckIfSelectionIsPresent));
 
@@ -159,7 +159,7 @@ namespace RetSimDesktop
 
         private void GearSlotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedItem = (DisplayWeapon)gearSlot.SelectedItem;
+            SelectedItem = (DisplayGear)gearSlot.SelectedItem;
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
             {
                 Source = this,
@@ -177,11 +177,11 @@ namespace RetSimDesktop
 
         private void Weapon_Click(object sender, RoutedEventArgs e)
         {
-            if (!weaponSimWorker.IsBusy && DataContext is RetSimUIModel retSimUIModel)
+            /*if (!weaponSimWorker.IsBusy && DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.SimButtonStatus.IsSimButtonEnabled = false;
                 weaponSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayWeapon>, int>(retSimUIModel, WeaponList, Constants.EquipmentSlots.Weapon));
-            }
+            }*/
         }
 
         private void ChkSelectAll_Checked(object sender, RoutedEventArgs e)
