@@ -8,16 +8,6 @@
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
 	<ServerGarbageCollection>true</ServerGarbageCollection>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<RepositoryUrl>https://github.com/TheSorm/RetSim</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PackageTags>sim; simulation; dps; world of warcraft; wow; tbc; the burning crusade; ret; retribution; ret paladin; retribution paladin; paladin</PackageTags>
-	<PackageProjectUrl>https://github.com/TheSorm/RetSim/wiki</PackageProjectUrl>
-	<Description>RetSim is a Retribution Paladin DPS Simulator for World of Warcraft: The Burning Crusade Classic.
-
-Made by Sulis and Pride.</Description>
-	  <VersionPrefix>1.1.2</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,7 +36,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_axe_72.jpg" />
     <None Remove="Properties\Icons\inv_axe_73.jpg" />
     <None Remove="Properties\Icons\inv_axe_85.jpg" />
-    <None Remove="Properties\Icons\inv_belt.jpg" />
     <None Remove="Properties\Icons\inv_belt_01.jpg" />
     <None Remove="Properties\Icons\inv_belt_03.jpg" />
     <None Remove="Properties\Icons\inv_belt_08.jpg" />
@@ -72,7 +61,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_belt_30.jpg" />
     <None Remove="Properties\Icons\inv_belt_31.jpg" />
     <None Remove="Properties\Icons\inv_belt_35.jpg" />
-    <None Remove="Properties\Icons\inv_boots.jpg" />
     <None Remove="Properties\Icons\inv_boots_02.jpg" />
     <None Remove="Properties\Icons\inv_boots_05.jpg" />
     <None Remove="Properties\Icons\inv_boots_07.jpg" />
@@ -99,7 +87,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_boots_plate_08.jpg" />
     <None Remove="Properties\Icons\inv_boots_plate_10.jpg" />
     <None Remove="Properties\Icons\inv_boots_wolf.jpg" />
-    <None Remove="Properties\Icons\inv_bracer.jpg" />
     <None Remove="Properties\Icons\inv_bracer_02.jpg" />
     <None Remove="Properties\Icons\inv_bracer_04.jpg" />
     <None Remove="Properties\Icons\inv_bracer_05.jpg" />
@@ -117,7 +104,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_bracer_18.jpg" />
     <None Remove="Properties\Icons\inv_bracer_19.jpg" />
     <None Remove="Properties\Icons\inv_brd_banner.jpg" />
-    <None Remove="Properties\Icons\inv_chest.jpg" />
     <None Remove="Properties\Icons\inv_chest_chain_03.jpg" />
     <None Remove="Properties\Icons\inv_chest_chain_06.jpg" />
     <None Remove="Properties\Icons\inv_chest_chain_07.jpg" />
@@ -156,7 +142,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_datacrystal06.jpg" />
     <None Remove="Properties\Icons\inv_drink_03.jpg" />
     <None Remove="Properties\Icons\inv_drink_04.jpg" />
-    <None Remove="Properties\Icons\inv_gauntlets.jpg" />
     <None Remove="Properties\Icons\inv_gauntlets_01.jpg" />
     <None Remove="Properties\Icons\inv_gauntlets_03.jpg" />
     <None Remove="Properties\Icons\inv_gauntlets_05.jpg" />
@@ -194,7 +179,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_hammer_10.jpg" />
     <None Remove="Properties\Icons\inv_hammer_17.jpg" />
     <None Remove="Properties\Icons\inv_hammer_28.jpg" />
-    <None Remove="Properties\Icons\inv_helmet.jpg" />
     <None Remove="Properties\Icons\inv_helmet128.jpg" />
     <None Remove="Properties\Icons\inv_helmet_01.jpg" />
     <None Remove="Properties\Icons\inv_helmet_03.jpg" />
@@ -250,7 +234,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_jewelcrafting_shadowsongamethyst_02.jpg" />
     <None Remove="Properties\Icons\inv_jewelcrafting_talasite_03.jpg" />
     <None Remove="Properties\Icons\inv_jewelcrafting_truesilverboar.jpg" />
-    <None Remove="Properties\Icons\inv_jewelry_necklace.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_necklace_04.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_necklace_06.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_necklace_07.jpg" />
@@ -276,7 +259,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_jewelry_necklace_47.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_necklace_ahnqiraj_01.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_necklace_ahnqiraj_03.jpg" />
-    <None Remove="Properties\Icons\inv_jewelry_ring.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_ring_02.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_ring_04.jpg" />
     <None Remove="Properties\Icons\inv_jewelry_ring_16.jpg" />
@@ -342,7 +324,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_misc_bone_06.jpg" />
     <None Remove="Properties\Icons\inv_misc_book_07.jpg" />
     <None Remove="Properties\Icons\inv_misc_book_13.jpg" />
-    <None Remove="Properties\Icons\inv_misc_cape.jpg" />
     <None Remove="Properties\Icons\inv_misc_cape_02.jpg" />
     <None Remove="Properties\Icons\inv_misc_cape_05.jpg" />
     <None Remove="Properties\Icons\inv_misc_cape_06.jpg" />
@@ -389,7 +370,6 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_misc_ticket_tarot_maelstrom_01.jpg" />
     <None Remove="Properties\Icons\inv_misc_ticket_tarot_vengeance.jpg" />
     <None Remove="Properties\Icons\inv_misc_token_argentdawn2.jpg" />
-    <None Remove="Properties\Icons\inv_pants.jpg" />
     <None Remove="Properties\Icons\inv_pants_02.jpg" />
     <None Remove="Properties\Icons\inv_pants_03.jpg" />
     <None Remove="Properties\Icons\inv_pants_05.jpg" />
@@ -437,12 +417,10 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_poison_mindnumbing.jpg" />
     <None Remove="Properties\Icons\inv_qirajidol_sun.jpg" />
     <None Remove="Properties\Icons\inv_qiraj_jewelblessed.jpg" />
-    <None Remove="Properties\Icons\inv_relics.jpg" />
     <None Remove="Properties\Icons\inv_relics_libramofgrace.jpg" />
     <None Remove="Properties\Icons\inv_relics_libramofhope.jpg" />
     <None Remove="Properties\Icons\inv_relics_libramoftruth.jpg" />
     <None Remove="Properties\Icons\inv_scroll_08.jpg" />
-    <None Remove="Properties\Icons\inv_shoulder.jpg" />
     <None Remove="Properties\Icons\inv_shoulder_01.jpg" />
     <None Remove="Properties\Icons\inv_shoulder_03.jpg" />
     <None Remove="Properties\Icons\inv_shoulder_07.jpg" />
@@ -501,11 +479,9 @@ Made by Sulis and Pride.</Description>
     <None Remove="Properties\Icons\inv_sword_71.jpg" />
     <None Remove="Properties\Icons\inv_sword_81.jpg" />
     <None Remove="Properties\Icons\inv_sword_82.jpg" />
-    <None Remove="Properties\Icons\inv_trinket.jpg" />
     <None Remove="Properties\Icons\inv_trinket_naxxramas03.jpg" />
     <None Remove="Properties\Icons\inv_trinket_naxxramas04.jpg" />
     <None Remove="Properties\Icons\inv_trinket_naxxramas06.jpg" />
-    <None Remove="Properties\Icons\inv_weapon.jpg" />
     <None Remove="Properties\Icons\inv_weapon_halberd15.jpg" />
     <None Remove="Properties\Icons\inv_weapon_halberd16.jpg" />
     <None Remove="Properties\Icons\inv_weapon_halberd_04.jpg" />
@@ -529,22 +505,11 @@ Made by Sulis and Pride.</Description>
 
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Resource Include="Properties\Icons\inv_pants.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1072.54" />
-    <PackageReference Include="ScottPlot.WPF" Version="4.1.32" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
+    <PackageReference Include="ScottPlot.WPF" Version="4.1.31" />
   </ItemGroup>
 
   <ItemGroup>
@@ -631,9 +596,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_axe_85.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_belt.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_belt_01.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -707,9 +669,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_belt_35.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_boots.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_boots_02.jpg">
@@ -790,9 +749,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_boots_wolf.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_bracer.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_bracer_02.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -842,9 +798,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_brd_banner.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_chest.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_chest_chain_03.jpg">
@@ -961,9 +914,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_drink_04.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_gauntlets.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_gauntlets_01.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -1073,9 +1023,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_hammer_28.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_helmet.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_helmet128.jpg">
@@ -1243,9 +1190,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_jewelcrafting_truesilverboar.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_jewelry_necklace.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_jewelry_necklace_04.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -1319,9 +1263,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_jewelry_necklace_ahnqiraj_03.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_jewelry_ring.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_jewelry_ring_02.jpg">
@@ -1517,9 +1458,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_misc_book_13.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_misc_cape.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_misc_cape_02.jpg">
@@ -1801,9 +1739,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_qiraj_jewelblessed.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_relics.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_relics_libramofgrace.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -1814,9 +1749,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_scroll_08.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_shoulder.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_shoulder_01.jpg">
@@ -1993,9 +1925,6 @@ Made by Sulis and Pride.</Description>
     <Resource Include="Properties\Icons\inv_sword_82.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Properties\Icons\inv_trinket.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Properties\Icons\inv_trinket_naxxramas03.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -2003,9 +1932,6 @@ Made by Sulis and Pride.</Description>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_trinket_naxxramas06.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Properties\Icons\inv_weapon.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Properties\Icons\inv_weapon_halberd15.jpg">
@@ -2062,6 +1988,9 @@ Made by Sulis and Pride.</Description>
     <Compile Update="Model\SimWorker\CsDelayWorker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Model\SimWorker\WeaponSim.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Model\SimWorker\GearSimWorker.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2069,11 +1998,6 @@ Made by Sulis and Pride.</Description>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -2085,18 +2009,11 @@ Made by Sulis and Pride.</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LICENSE">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Properties\MetaData\gemsMetaData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\MetaData\itemsMetaData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -2105,6 +2022,9 @@ Made by Sulis and Pride.</Description>
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\WeaponSelect.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="View\WeaponSlotSelect.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>

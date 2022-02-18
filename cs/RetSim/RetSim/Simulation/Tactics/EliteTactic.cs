@@ -9,8 +9,6 @@ public class EliteTactic : Tactic
     Spell SealOfCommand;
     Spell SealOfBlood;
     Spell Judgement;
-    Spell Exorcism;
-    Spell Consecration;
 
     private int csDelay = 0;
 
@@ -20,8 +18,6 @@ public class EliteTactic : Tactic
         SealOfCommand = Data.Collections.Spells[27170];
         SealOfBlood = Data.Collections.Spells[31892];
         Judgement = Data.Collections.Spells[20271];
-        Exorcism = Data.Collections.Spells[27138];
-        Consecration = Data.Collections.Spells[27173];
 
         csDelay = maxCSDelay;
     }

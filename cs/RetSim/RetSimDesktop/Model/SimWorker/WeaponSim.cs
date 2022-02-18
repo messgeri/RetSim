@@ -14,27 +14,27 @@ using System.Threading;
 
 namespace RetSimDesktop.View
 {
-    public class GearSim : BackgroundWorker
+    public class WeaponSim : BackgroundWorker
     {
         private static Thread[] threads = new Thread[Environment.ProcessorCount];
-        private static GearSimExecuter[] simExecuter = new GearSimExecuter[Environment.ProcessorCount];
-        public GearSim()
+        private static WeaponSimExecuter[] simExecuter = new WeaponSimExecuter[Environment.ProcessorCount];
+        public WeaponSim()
         {
             DoWork += BackgroundWorker_DoWork;
         }
 
         static void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            if (e.Argument is (RetSimUIModel, List<DisplayGear>, int))
+            if (e.Argument is (RetSimUIModel, List<DisplayWeapon>, int))
             {
-                Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int> input = (Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>)e.Argument;
+                Tuple<RetSimUIModel, IEnumerable<DisplayWeapon>, int> input = (Tuple<RetSimUIModel, IEnumerable<DisplayWeapon>, int>)e.Argument;
 
                 var race = input.Item1.PlayerSettings.SelectedRace;
                 var shattrathFaction = input.Item1.PlayerSettings.SelectedShattrathFaction;
                 var encounterID = input.Item1.EncounterSettings.EncounterID;
 
                 var numberOfSimulations = input.Item1.SimSettings.SimulationCount;
-                var maxCSDelay = input.Item1.SimSettings.MaxCSDelay;
+                var maxCSDelay = input.Item1.SimSettings.SimulationCount;
 
                 var minDuration = input.Item1.EncounterSettings.MinFightDurationMilliseconds;
                 var maxDuration = input.Item1.EncounterSettings.MaxFightDurationMilliseconds;
@@ -70,7 +70,7 @@ namespace RetSimDesktop.View
                         continue;
                     }
                     Equipment playerEquipment = input.Item1.SelectedGear.GetEquipment();
-                    playerEquipment.PlayerEquipment[input.Item3] = item.Item;
+                    playerEquipment.PlayerEquipment[input.Item3] = item.Weapon;
 
                     int freeThread = -1;
                     while (freeThread == -1)
@@ -104,6 +104,7 @@ namespace RetSimDesktop.View
                         MaxCSDelay = maxCSDelay,
                         Item = item
                     };
+
                     threads[freeThread] = new(new ThreadStart(simExecuter[freeThread].Execute));
                     threads[freeThread].Start();
                 }
@@ -119,9 +120,9 @@ namespace RetSimDesktop.View
         }
     }
 
-    public class GearSimExecuter : SimExecuter
+    public class WeaponSimExecuter : SimExecuter
     {
-        public DisplayGear Item { get; init; } = new();
+        public DisplayWeapon Item { get; init; } = new();
 
         public override void Execute()
         {

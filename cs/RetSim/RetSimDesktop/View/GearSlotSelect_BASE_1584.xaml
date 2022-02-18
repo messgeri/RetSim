@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="30px" />
         </Grid.RowDefinitions>
-        <DataGrid Name="gearSlot" EnableColumnVirtualization="True" EnableRowVirtualization="True" RowHeight="25" ColumnWidth="*" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False">
+        <DataGrid Name="gearSlot" RowHeight="25" ColumnWidth="*" GridLinesVisibility="Horizontal" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column" CanUserResizeColumns="False" CanUserResizeRows="False" AutoGenerateColumns="False">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -62,7 +62,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1" BorderBrush="Black">
-                                <Image Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Image}" />
+                                <Image Width="17" Height="17" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.ID, Converter={StaticResource ItemToImageConverter}}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -84,8 +84,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Socket1}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem1}" />
+                                BorderBrush="{Binding Item.Socket1, Converter={StaticResource SocketToSocketColorBrushConverter}}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket1, Converter={StaticResource SocketToImageConverter}}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -94,8 +94,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Socket2}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem2}" />
+                                BorderBrush="{Binding Item.Socket2, Converter={StaticResource SocketToSocketColorBrushConverter}}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket2, Converter={StaticResource SocketToImageConverter}}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -104,8 +104,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Socket3}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem3}" />
+                                BorderBrush="{Binding Item.Socket3, Converter={StaticResource SocketToSocketColorBrushConverter}}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket3, Converter={StaticResource SocketToImageConverter}}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -113,7 +113,7 @@
                 <DataGridTemplateColumn MinWidth="48" CanUserReorder="False" CanUserSort="False" Header="Bonus">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding SocketBonus}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
+                            <TextBlock Text="{Binding Item, Converter={StaticResource SocketBonusConverter}}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -284,9 +284,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <local:GearPlannerInputField Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" Margin="205,0,0,0"/>
-        <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="410,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="149" Height="20"/>
+        <local:GearPlannerInputField Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200"/>
         <Button Content="Sim Gear DPS" Grid.Row="1" IsEnabled="{Binding SimButtonStatus.IsSimButtonEnabled}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="20" Margin="0,0,5,5" Click="GearSim_Click" />
     </Grid>
-
+    
 </UserControl>
