@@ -14,20 +14,20 @@ using System.Threading;
 
 namespace RetSimDesktop.View
 {
-    public class GearSim : BackgroundWorker
+    public class WeaponSim : BackgroundWorker
     {
         private static Thread[] threads = new Thread[Environment.ProcessorCount];
-        private static GearSimExecuter[] simExecuter = new GearSimExecuter[Environment.ProcessorCount];
-        public GearSim()
+        private static WeaponSimExecuter[] simExecuter = new WeaponSimExecuter[Environment.ProcessorCount];
+        public WeaponSim()
         {
             DoWork += BackgroundWorker_DoWork;
         }
 
         static void BackgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
         {
-            if (e.Argument is (RetSimUIModel, List<DisplayGear>, int))
+            if (e.Argument is (RetSimUIModel, List<DisplayWeapon>, int))
             {
-                Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int> input = (Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>)e.Argument;
+                Tuple<RetSimUIModel, IEnumerable<DisplayWeapon>, int> input = (Tuple<RetSimUIModel, IEnumerable<DisplayWeapon>, int>)e.Argument;
 
                 var race = input.Item1.PlayerSettings.SelectedRace;
                 var shattrathFaction = input.Item1.PlayerSettings.SelectedShattrathFaction;
@@ -69,9 +69,8 @@ namespace RetSimDesktop.View
                     {
                         continue;
                     }
-                    //TODO: Move out of loop, fetch equipment once, and make copys instead of fetching multiple times (Also change weapon sim)
                     Equipment playerEquipment = input.Item1.SelectedGear.GetEquipment();
-                    playerEquipment.PlayerEquipment[input.Item3] = item.Item;
+                    playerEquipment.PlayerEquipment[input.Item3] = item.Weapon;
 
                     int freeThread = -1;
                     while (freeThread == -1)
@@ -105,6 +104,7 @@ namespace RetSimDesktop.View
                         MaxCSDelay = maxCSDelay,
                         Item = item
                     };
+
                     threads[freeThread] = new(new ThreadStart(simExecuter[freeThread].Execute));
                     threads[freeThread].Start();
                 }
@@ -120,9 +120,9 @@ namespace RetSimDesktop.View
         }
     }
 
-    public class GearSimExecuter : SimExecuter
+    public class WeaponSimExecuter : SimExecuter
     {
-        public DisplayGear Item { get; init; } = new();
+        public DisplayWeapon Item { get; init; } = new();
 
         public override void Execute()
         {
