@@ -12,6 +12,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Linq;
+using System.ComponentModel;
 
 namespace RetSimDesktop
 {
@@ -21,20 +23,28 @@ namespace RetSimDesktop
     public partial class GearSlotSelect : UserControl
     {
         private static GearSim gearSimWorker = new();
+        public delegate void GearSearchEventHandler(GearSlotSelect vm, int slotID, string pattern);
+        public event GearSearchEventHandler GearSearched;
 
         public int SlotID { get; set; }
-        public IEnumerable<DisplayGear> SlotList
+
+        private void SearchBar_ConfirmChange(object sender, KeyEventArgs e)
         {
-            get => (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
-            set => SetValue(SlotListProperty, value);
+            if (e.Key == Key.Enter)
+            {
+                GearSearched?.Invoke(this, SlotID, SearchBar.Text);
+            }
         }
-
-        public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
-            "SlotList",
-            typeof(IEnumerable<DisplayGear>),
-            typeof(GearSlotSelect));
-
-        public List<Enchant> EnchantList
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(DataContext is RetSimUIModel viewmodel)
+            {
+                Slot slot = (Slot)SlotID;
+                viewmodel.GearSlots[slot].FilterItems(SearchBar.Text);
+            }
+        }
+        
+        /*public List<Enchant> EnchantList
         {
             get => (List<Enchant>)GetValue(EnchantListProperty);
             set => SetValue(EnchantListProperty, value);
@@ -44,7 +54,7 @@ namespace RetSimDesktop
             "EnchantList",
             typeof(List<Enchant>),
             typeof(GearSlotSelect));
-
+        */
         public DisplayGear SelectedItem
         {
             get => (DisplayGear)GetValue(SelectedItemProperty);
@@ -75,33 +85,48 @@ namespace RetSimDesktop
             {
                 if (DataContext is RetSimUIModel retSimUIModel)
                 {
-                    if (EnchantList == null)
+                    Slot slot = (Slot)SlotID;
+                    Binding binding = new Binding()
                     {
-                        EnchantComboBox.Visibility = Visibility.Hidden;
+                        Source = DataContext,
+                        Path = new PropertyPath("GearSlots["+slot+"].ShownItems"),
+                        Mode = BindingMode.TwoWay,
+                        IsAsync = true
+                    };
+                    gearSlot.SetBinding(DataGrid.ItemsSourceProperty, binding);
+
+                    Binding text = new Binding()
+                    {
+                        Source = DataContext,
+                        Path = new PropertyPath("GearSlots["+slot+"].SearchWord"),
+                        Mode = BindingMode.TwoWay,
+                    };
+                    text.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    SearchBar.SetBinding(TextBox.TextProperty, text);
+
+                    if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
+                    {
+                        Binding enchant = new Binding()
+                        {
+                            Source = DataContext,
+                            Path = new PropertyPath("EnchantsBySlot["+ slot +"]"),
+                            Mode = BindingMode.OneWay,
+                            IsAsync = true
+                        };
+                        EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, enchant);
+                        EnchantComboBox.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        EnchantComboBox.Visibility = Visibility.Visible;
+                        EnchantComboBox.Visibility = Visibility.Hidden;
                     }
                 }
             };
-
-            gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
-            {
-                Source = this,
-                Mode = BindingMode.OneWay,
-            });
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
             {
                 Source = this,
                 Mode = BindingMode.TwoWay
-            });
-
-            EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, new Binding("EnchantList")
-            {
-                Source = this,
-                Mode = BindingMode.OneWay,
             });
 
             EnchantComboBox.SetBinding(ComboBox.SelectedItemProperty, new Binding("SelectedEnchant")
@@ -110,43 +135,29 @@ namespace RetSimDesktop
                 Mode = BindingMode.TwoWay
             });
 
-            StatConverter statConverter = new();
-
-            Binding strBinding = new("Item.Stats[" + StatName.Strength + "]");
-            strBinding.Converter = statConverter;
+            Binding strBinding = new("Str");
             StrColumn.Binding = strBinding;
-            Binding apBinding = new("Item.Stats[" + StatName.AttackPower + "]");
-            apBinding.Converter = statConverter;
+            Binding apBinding = new("AP");
             APColumn.Binding = apBinding;
-            Binding agiBinding = new("Item.Stats[" + StatName.Agility + "]");
-            agiBinding.Converter = statConverter;
+            Binding agiBinding = new("Agi");
             AgiColumn.Binding = agiBinding;
-            Binding critBinding = new("Item.Stats[" + StatName.CritRating + "]");
-            critBinding.Converter = statConverter;
+            Binding critBinding = new("Crit");
             CritColumn.Binding = critBinding;
-            Binding hitBinding = new("Item.Stats[" + StatName.HitRating + "]");
-            hitBinding.Converter = statConverter;
+            Binding hitBinding = new("Hit");
             HitColumn.Binding = hitBinding;
-            Binding hasteBinding = new("Item.Stats[" + StatName.HasteRating + "]");
-            hasteBinding.Converter = statConverter;
+            Binding hasteBinding = new("Haste");
             HasteColumn.Binding = hasteBinding;
-            Binding expBinding = new("Item.Stats[" + StatName.ExpertiseRating + "]");
-            expBinding.Converter = statConverter;
+            Binding expBinding = new("Exp");
             ExpColumn.Binding = expBinding;
-            Binding apenBinding = new("Item.Stats[" + StatName.ArmorPenetration + "]");
-            apenBinding.Converter = statConverter;
+            Binding apenBinding = new("ArPen");
             APenColumn.Binding = apenBinding;
-            Binding staBinding = new("Item.Stats[" + StatName.Stamina + "]");
-            staBinding.Converter = statConverter;
+            Binding staBinding = new("Stam");
             StaColumn.Binding = staBinding;
-            Binding intBinding = new("Item.Stats[" + StatName.Intellect + "]");
-            intBinding.Converter = statConverter;
+            Binding intBinding = new("Intellect");
             IntColumn.Binding = intBinding;
-            Binding mp5Binding = new("Item.Stats[" + StatName.ManaPer5 + "]");
-            mp5Binding.Converter = statConverter;
+            Binding mp5Binding = new("MP5");
             MP5Column.Binding = mp5Binding;
-            Binding spBinding = new("Item.Stats[" + StatName.SpellPower + "]");
-            spBinding.Converter = statConverter;
+            Binding spBinding = new("SP");
             SPColumn.Binding = spBinding;
         }
 
@@ -155,7 +166,7 @@ namespace RetSimDesktop
             if (!gearSimWorker.IsBusy && DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.SimButtonStatus.IsSimButtonEnabled = false;
-                gearSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>(retSimUIModel, SlotList, SlotID));
+                gearSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>(retSimUIModel, retSimUIModel.GearSlots[(Slot)SlotID].AllItems, SlotID));
             }
         }
 
@@ -217,6 +228,7 @@ namespace RetSimDesktop
 
                                     retSimUIModel.SelectedGear.OnPropertyChanged("");
                                     displayGear.OnPropertyChanged("");
+                                    displayGear.RefreshGems();
                                 }
                                 e.Handled = true;
                             }
@@ -271,9 +283,10 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            if (SlotList != null)
+            if (DataContext is RetSimUIModel viewmodel)
             {
-                foreach (var displayItem in SlotList)
+                Slot slot = (Slot)SlotID;
+                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
                 {
                     displayItem.EnabledForGearSim = true;
                 }
@@ -282,9 +295,10 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (SlotList != null)
+            if (DataContext is RetSimUIModel viewmodel)
             {
-                foreach (var displayItem in SlotList)
+                Slot slot = (Slot)SlotID;
+                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
                 {
                     displayItem.EnabledForGearSim = false;
                 }
@@ -314,15 +328,6 @@ namespace RetSimDesktop
                     {
                         retSimUIModel.TooltipSettings.HoverItemID = displayItem.Item.ID;
                     }
-
-                    foreach (var item in SlotList)
-                    {
-                        if (item.Item.Slot == Slot.Finger)
-                        {
-                            retSimUIModel.TooltipSettings.RingEnchant = SelectedEnchant;
-                        }
-                        break;
-                    }
                 }
             }
         }
@@ -332,22 +337,6 @@ namespace RetSimDesktop
             if (DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.TooltipSettings.HoverItemID = 0;
-            }
-        }
-
-        private void gearSlot_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (DataContext is RetSimUIModel retSimUIModel)
-            {
-                retSimUIModel.TooltipSettings.OverlayControl = gearSlot;
-            }
-        }
-
-        private void gearSlot_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (DataContext is RetSimUIModel retSimUIModel)
-            {
-                retSimUIModel.TooltipSettings.OverlayControl = null;
             }
         }
     }
