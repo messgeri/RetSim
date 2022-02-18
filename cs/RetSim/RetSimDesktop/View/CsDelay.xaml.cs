@@ -1,5 +1,4 @@
-﻿using RetSim.Items;
-using RetSimDesktop.Model;
+﻿using RetSimDesktop.Model;
 using RetSimDesktop.ViewModel;
 using System.ComponentModel;
 using System.Windows;
@@ -13,7 +12,7 @@ namespace RetSimDesktop
     public partial class CsDelay : UserControl
     {
         private static CsDelayWorker csDelayWorker = new();
-        private DisplayGear? currentWeapon;
+        private DisplayWeapon? currentWeapon;
         public CsDelay()
         {
             InitializeComponent();
@@ -36,12 +35,11 @@ namespace RetSimDesktop
                 csDelayGrid.Dispatcher.Invoke(() =>
                 {
                     if (DataContext is RetSimUIModel retSimUIModel && retSimUIModel.SelectedGear.SelectedWeapon != null
-                    && retSimUIModel.SimButtonStatus.IsSimButtonEnabled && currentWeapon != retSimUIModel.SelectedGear.SelectedWeapon
-                    && retSimUIModel.SelectedGear.SelectedWeapon.Item is EquippableWeapon equippedWeapon)
+                    && retSimUIModel.SimButtonStatus.IsSimButtonEnabled && currentWeapon != retSimUIModel.SelectedGear.SelectedWeapon)
                     {
                         retSimUIModel.DisplayCsDelay.Clear();
 
-                        for (int i = 0; i < equippedWeapon.AttackSpeed / 100; i++)
+                        for (int i = 0; i < retSimUIModel.SelectedGear.SelectedWeapon.Weapon.AttackSpeed / 100; i++)
                         {
                             retSimUIModel.DisplayCsDelay.Add(new() { Delay = i / 10f, DpsDelta = 0, EnabledForCsDelay = true });
                         }

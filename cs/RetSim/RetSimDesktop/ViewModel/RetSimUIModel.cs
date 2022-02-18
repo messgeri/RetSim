@@ -33,8 +33,8 @@ namespace RetSimDesktop.ViewModel
         private List<DisplayCsDelay> _DisplayCsDelay;
         private Dictionary<Slot, Dictionary<int, List<DisplayGear>>> _GearByPhases;
         private Dictionary<int, DisplayGear> _AllGear;
-        private Dictionary<WeaponType, Dictionary<int, List<DisplayGear>>> _WeaponsByPhases;
-        private Dictionary<int, DisplayGear> _AllWeapons;
+        private Dictionary<WeaponType, Dictionary<int, List<DisplayWeapon>>> _WeaponsByPhases;
+        private Dictionary<int, DisplayWeapon> _AllWeapons;
         private Dictionary<Slot, List<Enchant>> _EnchantsBySlot;
         private Dictionary<Slot, DisplayGearSlot> _gearSlots;
 
@@ -102,9 +102,9 @@ namespace RetSimDesktop.ViewModel
                     {
                         _WeaponsByPhases[weapon.Type][weapon.Phase] = new();
                     }
-                    DisplayGear displayWeapon = new() { Item = weapon, EnabledForGearSim = true, DPS = 0 };
+                    DisplayWeapon displayWeapon = new() { Weapon = weapon, EnabledForGearSim = true, DPS = 0 };
                     _WeaponsByPhases[weapon.Type][weapon.Phase].Add(displayWeapon);
-                    _AllWeapons.Add(displayWeapon.Item.ID, displayWeapon);
+                    _AllWeapons.Add(displayWeapon.Weapon.ID, displayWeapon);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace RetSimDesktop.ViewModel
             _SelectedGear.SelectedTrinket1 = _SelectedGear.SelectedTrinket1 != null ? _AllGear[_SelectedGear.SelectedTrinket1.Item.ID] : null;
             _SelectedGear.SelectedTrinket2 = _SelectedGear.SelectedTrinket2 != null ? _AllGear[_SelectedGear.SelectedTrinket2.Item.ID] : null;
             _SelectedGear.SelectedRelic = _SelectedGear.SelectedRelic != null ? _AllGear[_SelectedGear.SelectedRelic.Item.ID] : null;
-            _SelectedGear.SelectedWeapon = _SelectedGear.SelectedWeapon != null ? _AllWeapons[_SelectedGear.SelectedWeapon.Item.ID] : null;
+            _SelectedGear.SelectedWeapon = _SelectedGear.SelectedWeapon != null ? _AllWeapons[_SelectedGear.SelectedWeapon.Weapon.ID] : null;
             _SelectedGear.HeadEnchant = _SelectedGear.HeadEnchant != null ? Enchants[_SelectedGear.HeadEnchant.ID] : _EnchantsBySlot[Slot.Head].Where(e => e.ID == -1).First();
             _SelectedGear.ShouldersEnchant = _SelectedGear.ShouldersEnchant != null ? Enchants[_SelectedGear.ShouldersEnchant.ID] : _EnchantsBySlot[Slot.Shoulders].Where(e => e.ID == -1).First();
             _SelectedGear.BackEnchant = _SelectedGear.BackEnchant != null ? Enchants[_SelectedGear.BackEnchant.ID] : _EnchantsBySlot[Slot.Back].Where(e => e.ID == -1).First();
@@ -269,7 +269,7 @@ namespace RetSimDesktop.ViewModel
         }
 
         [JsonIgnore]
-        public Dictionary<WeaponType, Dictionary<int, List<DisplayGear>>> WeaponsByPhases
+        public Dictionary<WeaponType, Dictionary<int, List<DisplayWeapon>>> WeaponsByPhases
         {
             get { return _WeaponsByPhases; }
             set { _WeaponsByPhases = value; }
@@ -290,7 +290,7 @@ namespace RetSimDesktop.ViewModel
         }
 
         [JsonIgnore]
-        public Dictionary<int, DisplayGear> AllWeapons
+        public Dictionary<int, DisplayWeapon> AllWeapons
         {
             get { return _AllWeapons; }
             set { _AllWeapons = value; }
