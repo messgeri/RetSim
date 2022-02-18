@@ -20,7 +20,7 @@ namespace RetSimDesktop
     /// </summary>
     public partial class WeaponSlotSelect : UserControl
     {
-        //private static WeaponSim weaponSimWorker = new();
+        private static WeaponSim weaponSimWorker = new();
 
         public List<DisplayWeapon> WeaponList
         {
