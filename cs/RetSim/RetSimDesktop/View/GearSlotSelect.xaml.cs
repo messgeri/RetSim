@@ -12,8 +12,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Linq;
-using System.ComponentModel;
 
 namespace RetSimDesktop
 {
@@ -23,28 +21,20 @@ namespace RetSimDesktop
     public partial class GearSlotSelect : UserControl
     {
         private static GearSim gearSimWorker = new();
-        public delegate void GearSearchEventHandler(GearSlotSelect vm, int slotID, string pattern);
-        public event GearSearchEventHandler GearSearched;
 
         public int SlotID { get; set; }
+        public List<DisplayGear> SlotList
+        {
+            get => (List<DisplayGear>)GetValue(SlotListProperty);
+            set => SetValue(SlotListProperty, value);
+        }
 
-        private void SearchBar_ConfirmChange(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                GearSearched?.Invoke(this, SlotID, SearchBar.Text);
-            }
-        }
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if(DataContext is RetSimUIModel viewmodel)
-            {
-                Slot slot = (Slot)SlotID;
-                viewmodel.GearSlots[slot].FilterItems(SearchBar.Text);
-            }
-        }
-        
-        /*public List<Enchant> EnchantList
+        public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
+            "SlotList",
+            typeof(IEnumerable<DisplayGear>),
+            typeof(GearSlotSelect));
+
+        public List<Enchant> EnchantList
         {
             get => (List<Enchant>)GetValue(EnchantListProperty);
             set => SetValue(EnchantListProperty, value);
@@ -54,7 +44,7 @@ namespace RetSimDesktop
             "EnchantList",
             typeof(List<Enchant>),
             typeof(GearSlotSelect));
-        */
+
         public DisplayGear SelectedItem
         {
             get => (DisplayGear)GetValue(SelectedItemProperty);
@@ -85,48 +75,41 @@ namespace RetSimDesktop
             {
                 if (DataContext is RetSimUIModel retSimUIModel)
                 {
-                    Slot slot = (Slot)SlotID;
-                    Binding binding = new Binding()
-                    {
-                        Source = DataContext,
-                        Path = new PropertyPath("GearSlots["+slot+"].ShownItems"),
-                        Mode = BindingMode.TwoWay,
-                        IsAsync = true
-                    };
-                    gearSlot.SetBinding(DataGrid.ItemsSourceProperty, binding);
-
-                    Binding text = new Binding()
-                    {
-                        Source = DataContext,
-                        Path = new PropertyPath("GearSlots["+slot+"].SearchWord"),
-                        Mode = BindingMode.TwoWay,
-                    };
-                    text.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    SearchBar.SetBinding(TextBox.TextProperty, text);
-
-                    if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
-                    {
-                        Binding enchant = new Binding()
-                        {
-                            Source = DataContext,
-                            Path = new PropertyPath("EnchantsBySlot["+ slot +"]"),
-                            Mode = BindingMode.OneWay,
-                            IsAsync = true
-                        };
-                        EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, enchant);
-                        EnchantComboBox.Visibility = Visibility.Visible;
-                    }
-                    else
+                    if (EnchantList == null)
                     {
                         EnchantComboBox.Visibility = Visibility.Hidden;
                     }
+                    else
+                    {
+                        EnchantComboBox.Visibility = Visibility.Visible;
+                    }
+
+                    if(SlotList.Count > 0 && SlotList[0].Item is EquippableWeapon && WeaponType.Visibility == Visibility.Collapsed)
+                    {
+                        WeaponMinDamage.Visibility = Visibility.Visible;
+                        WeaponMaxDamage.Visibility = Visibility.Visible;
+                        WeaponSpeed.Visibility = Visibility.Visible;
+                        WeaponDPS.Visibility = Visibility.Visible;
+                    }
                 }
             };
+
+            gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay,
+            });
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
             {
                 Source = this,
                 Mode = BindingMode.TwoWay
+            });
+
+            EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, new Binding("EnchantList")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay,
             });
 
             EnchantComboBox.SetBinding(ComboBox.SelectedItemProperty, new Binding("SelectedEnchant")
@@ -135,29 +118,43 @@ namespace RetSimDesktop
                 Mode = BindingMode.TwoWay
             });
 
-            Binding strBinding = new("Str");
+            StatConverter statConverter = new();
+
+            Binding strBinding = new("Item.Stats[" + StatName.Strength + "]");
+            strBinding.Converter = statConverter;
             StrColumn.Binding = strBinding;
-            Binding apBinding = new("AP");
+            Binding apBinding = new("Item.Stats[" + StatName.AttackPower + "]");
+            apBinding.Converter = statConverter;
             APColumn.Binding = apBinding;
-            Binding agiBinding = new("Agi");
+            Binding agiBinding = new("Item.Stats[" + StatName.Agility + "]");
+            agiBinding.Converter = statConverter;
             AgiColumn.Binding = agiBinding;
-            Binding critBinding = new("Crit");
+            Binding critBinding = new("Item.Stats[" + StatName.CritRating + "]");
+            critBinding.Converter = statConverter;
             CritColumn.Binding = critBinding;
-            Binding hitBinding = new("Hit");
+            Binding hitBinding = new("Item.Stats[" + StatName.HitRating + "]");
+            hitBinding.Converter = statConverter;
             HitColumn.Binding = hitBinding;
-            Binding hasteBinding = new("Haste");
+            Binding hasteBinding = new("Item.Stats[" + StatName.HasteRating + "]");
+            hasteBinding.Converter = statConverter;
             HasteColumn.Binding = hasteBinding;
-            Binding expBinding = new("Exp");
+            Binding expBinding = new("Item.Stats[" + StatName.ExpertiseRating + "]");
+            expBinding.Converter = statConverter;
             ExpColumn.Binding = expBinding;
-            Binding apenBinding = new("ArPen");
+            Binding apenBinding = new("Item.Stats[" + StatName.ArmorPenetration + "]");
+            apenBinding.Converter = statConverter;
             APenColumn.Binding = apenBinding;
-            Binding staBinding = new("Stam");
+            Binding staBinding = new("Item.Stats[" + StatName.Stamina + "]");
+            staBinding.Converter = statConverter;
             StaColumn.Binding = staBinding;
-            Binding intBinding = new("Intellect");
+            Binding intBinding = new("Item.Stats[" + StatName.Intellect + "]");
+            intBinding.Converter = statConverter;
             IntColumn.Binding = intBinding;
-            Binding mp5Binding = new("MP5");
+            Binding mp5Binding = new("Item.Stats[" + StatName.ManaPer5 + "]");
+            mp5Binding.Converter = statConverter;
             MP5Column.Binding = mp5Binding;
-            Binding spBinding = new("SP");
+            Binding spBinding = new("Item.Stats[" + StatName.SpellPower + "]");
+            spBinding.Converter = statConverter;
             SPColumn.Binding = spBinding;
         }
 
@@ -166,7 +163,7 @@ namespace RetSimDesktop
             if (!gearSimWorker.IsBusy && DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.SimButtonStatus.IsSimButtonEnabled = false;
-                gearSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>(retSimUIModel, retSimUIModel.GearSlots[(Slot)SlotID].AllItems, SlotID));
+                gearSimWorker.RunWorkerAsync((retSimUIModel, SlotList, SlotID));
             }
         }
 
@@ -228,7 +225,6 @@ namespace RetSimDesktop
 
                                     retSimUIModel.SelectedGear.OnPropertyChanged("");
                                     displayGear.OnPropertyChanged("");
-                                    displayGear.RefreshGems();
                                 }
                                 e.Handled = true;
                             }
@@ -283,10 +279,9 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            if (DataContext is RetSimUIModel viewmodel)
+            if (SlotList != null)
             {
-                Slot slot = (Slot)SlotID;
-                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
+                foreach (var displayItem in SlotList)
                 {
                     displayItem.EnabledForGearSim = true;
                 }
@@ -295,10 +290,9 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (DataContext is RetSimUIModel viewmodel)
+            if (SlotList != null)
             {
-                Slot slot = (Slot)SlotID;
-                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
+                foreach (var displayItem in SlotList)
                 {
                     displayItem.EnabledForGearSim = false;
                 }
@@ -328,6 +322,15 @@ namespace RetSimDesktop
                     {
                         retSimUIModel.TooltipSettings.HoverItemID = displayItem.Item.ID;
                     }
+
+                    foreach (var item in SlotList)
+                    {
+                        if (item.Item.Slot == Slot.Finger)
+                        {
+                            retSimUIModel.TooltipSettings.RingEnchant = SelectedEnchant;
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -337,6 +340,22 @@ namespace RetSimDesktop
             if (DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.TooltipSettings.HoverItemID = 0;
+            }
+        }
+
+        private void gearSlot_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (DataContext is RetSimUIModel retSimUIModel)
+            {
+                retSimUIModel.TooltipSettings.OverlayControl = gearSlot;
+            }
+        }
+
+        private void gearSlot_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (DataContext is RetSimUIModel retSimUIModel)
+            {
+                retSimUIModel.TooltipSettings.OverlayControl = null;
             }
         }
     }
@@ -537,6 +556,33 @@ namespace RetSimDesktop
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return null;
+        }
+    }
+
+
+    public class WeaponSpeedConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return (((int)value) / 1000f).ToString("0.#");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+    public class WeaponDPSConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return ((float)value).ToString("0.##");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
         }
     }
 }

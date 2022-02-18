@@ -47,16 +47,16 @@
                 <local:GearSlotSelect x:Name="Finger1Select" SlotID="10" SelectedItem="{Binding SelectedGear.SelectedFinger1, Mode=TwoWay}" SelectedEnchant="{Binding SelectedGear.Finger1Enchant, Mode=TwoWay}"/>
             </TabItem>
             <TabItem Header="Finger 2">
-                <local:GearSlotSelect x:Name="Finger2Select" SlotID="10" SelectedItem="{Binding SelectedGear.SelectedFinger2, Mode=TwoWay}" SelectedEnchant="{Binding SelectedGear.Finger2Enchant, Mode=TwoWay}"/>
+                <local:GearSlotSelect x:Name="Finger2Select" SlotID="11" SelectedItem="{Binding SelectedGear.SelectedFinger2, Mode=TwoWay}" SelectedEnchant="{Binding SelectedGear.Finger2Enchant, Mode=TwoWay}"/>
             </TabItem>
             <TabItem Header="Trinket 1">
-                <local:GearSlotSelect x:Name="Trinket1Select" SlotID="11" SelectedItem="{Binding SelectedGear.SelectedTrinket1, Mode=TwoWay}"/>
+                <local:GearSlotSelect x:Name="Trinket1Select" SlotID="12" SelectedItem="{Binding SelectedGear.SelectedTrinket1, Mode=TwoWay}"/>
             </TabItem>
             <TabItem Header="Trinket 2">
-                <local:GearSlotSelect x:Name="Trinket2Select" SlotID="11" SelectedItem="{Binding SelectedGear.SelectedTrinket2, Mode=TwoWay}"/>
+                <local:GearSlotSelect x:Name="Trinket2Select" SlotID="13" SelectedItem="{Binding SelectedGear.SelectedTrinket2, Mode=TwoWay}"/>
             </TabItem>
             <TabItem Header="Relic">
-                <local:GearSlotSelect x:Name="RelicSelect" SlotID="12" SelectedItem="{Binding SelectedGear.SelectedRelic, Mode=TwoWay}"/>
+                <local:GearSlotSelect x:Name="RelicSelect" SlotID="14" SelectedItem="{Binding SelectedGear.SelectedRelic, Mode=TwoWay}"/>
             </TabItem>
         </TabControl>
     </Grid>
