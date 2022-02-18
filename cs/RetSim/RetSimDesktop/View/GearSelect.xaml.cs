@@ -75,29 +75,6 @@ namespace RetSimDesktop
                     }
                     shownGear.Reverse();
                     retSimUIModel.GearSlots[slot].AllItems = shownGear;
-
-                    /*foreach (var itemSelector in SelectorBySlot[slot])
-                    {
-                        /*itemSelector.SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
-                        {
-                            Source = this,
-                            Mode = BindingMode.TwoWay,
-                            IsAsync = true
-                        });*/
-
-                        //itemSelector.LevelColumn.SortDirection = ListSortDirection.Descending;
-                        //itemSelector.gearSlot.Items.SortDescriptions.Add(new SortDescription(itemSelector.LevelColumn.SortMemberPath, ListSortDirection.Descending));
-
-
-                     /*   if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
-                        {
-                            itemSelector.SetBinding(GearSlotSelect.EnchantListProperty, new Binding("EnchantsBySlot[" + slot + "]")
-                            {
-                                Source = DataContext,
-                                Mode = BindingMode.OneWay
-                            });
-                        }
-                    }*/
                 }
             }
         }
