@@ -421,7 +421,7 @@ namespace RetSimDesktop.ViewModel
                 var options = new JsonSerializerOptions { Converters = { new SelectedGearJsonConverter(), new SelectedGemJsonConverter() } };
                 uiModel = JsonSerializer.Deserialize<RetSimUIModel>(jsonString, options);
             }
-            catch (Exception) { }
+            catch (Exception e) { var res = System.Windows.MessageBox.Show(e.Message + " " + e.Source); }
 
 
             if (uiModel != null)

@@ -27,11 +27,6 @@ namespace RetSimDesktop
         public event GearSearchEventHandler GearSearched;
 
         public int SlotID { get; set; }
-        public IEnumerable<DisplayGear> SlotList
-        {
-            get => (IEnumerable<DisplayGear>)GetValue(SlotListProperty);
-            set => SetValue(SlotListProperty, value);
-        }
 
         private void SearchBar_ConfirmChange(object sender, KeyEventArgs e)
         {
@@ -42,23 +37,14 @@ namespace RetSimDesktop
         }
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
-            {
-                GearSearched?.Invoke(this, SlotID, SearchBar.Text);
-            }*/
             if(DataContext is RetSimUIModel viewmodel)
             {
                 Slot slot = (Slot)SlotID;
                 viewmodel.GearSlots[slot].FilterItems(SearchBar.Text);
             }
         }
-
-        public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
-            "SlotList",
-            typeof(IEnumerable<DisplayGear>),
-            typeof(GearSlotSelect));
         
-        public List<Enchant> EnchantList
+        /*public List<Enchant> EnchantList
         {
             get => (List<Enchant>)GetValue(EnchantListProperty);
             set => SetValue(EnchantListProperty, value);
@@ -68,7 +54,7 @@ namespace RetSimDesktop
             "EnchantList",
             typeof(List<Enchant>),
             typeof(GearSlotSelect));
-
+        */
         public DisplayGear SelectedItem
         {
             get => (DisplayGear)GetValue(SelectedItemProperty);
@@ -99,18 +85,11 @@ namespace RetSimDesktop
             {
                 if (DataContext is RetSimUIModel retSimUIModel)
                 {
-                    if (EnchantList == null)
-                    {
-                        EnchantComboBox.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        EnchantComboBox.Visibility = Visibility.Visible;
-                    }
+                    Slot slot = (Slot)SlotID;
                     Binding binding = new Binding()
                     {
                         Source = DataContext,
-                        Path = new PropertyPath("GearSlots["+(Slot)SlotID+"].ShownItems"),
+                        Path = new PropertyPath("GearSlots["+slot+"].ShownItems"),
                         Mode = BindingMode.TwoWay,
                         IsAsync = true
                     };
@@ -119,19 +98,30 @@ namespace RetSimDesktop
                     Binding text = new Binding()
                     {
                         Source = DataContext,
-                        Path = new PropertyPath("GearSlots[" + (Slot)SlotID + "].SearchWord"),
+                        Path = new PropertyPath("GearSlots["+slot+"].SearchWord"),
                         Mode = BindingMode.TwoWay,
                     };
-                    SearchBar.SetBinding(TextBlock.TextProperty, text);
+                    text.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    SearchBar.SetBinding(TextBox.TextProperty, text);
+
+                    if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
+                    {
+                        Binding enchant = new Binding()
+                        {
+                            Source = DataContext,
+                            Path = new PropertyPath("EnchantsBySlot["+ slot +"]"),
+                            Mode = BindingMode.OneWay,
+                            IsAsync = true
+                        };
+                        EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, enchant);
+                        EnchantComboBox.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        EnchantComboBox.Visibility = Visibility.Hidden;
+                    }
                 }
             };
-            
-            /*gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
-            {
-                Source = this,
-                Mode = BindingMode.TwoWay,
-                IsAsync = true
-            });*/
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
             {
@@ -139,11 +129,11 @@ namespace RetSimDesktop
                 Mode = BindingMode.TwoWay
             });
 
-            EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, new Binding("EnchantList")
+            /*EnchantComboBox.SetBinding(ComboBox.ItemsSourceProperty, new Binding("EnchantList")
             {
                 Source = this,
                 Mode = BindingMode.OneWay,
-            });
+            });*/
 
             EnchantComboBox.SetBinding(ComboBox.SelectedItemProperty, new Binding("SelectedEnchant")
             {

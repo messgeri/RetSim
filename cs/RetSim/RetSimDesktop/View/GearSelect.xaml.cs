@@ -26,12 +26,10 @@ namespace RetSimDesktop
                 if (DataContext is RetSimUIModel retSimUIModel)
                 {
                     retSimUIModel.SelectedPhases.PropertyChanged += Model_PropertyChanged;
-                    Model_PropertyChanged(this, new PropertyChangedEventArgs(""));
                 }
             };
-            //ShownGear = new();
             if (DataContext is RetSimUIModel retSimUIModel)
-            {                
+            {
                 SelectorBySlot.Add(Slot.Head, new() { HeadSelect });
                 SelectorBySlot.Add(Slot.Neck, new() { NeckSelect });
                 SelectorBySlot.Add(Slot.Shoulders, new() { ShouldersSelect });
@@ -46,106 +44,39 @@ namespace RetSimDesktop
                 SelectorBySlot.Add(Slot.Trinket, new() { Trinket1Select, Trinket2Select });
                 SelectorBySlot.Add(Slot.Relic, new() { RelicSelect });
             }
-
-            /*foreach(var slot in SelectorBySlot.Values)
-            {
-                foreach (var selector in slot)
-                {
-                    selector.GearSearched += SearchResult;
-                }
-            }*/
-        }
-
-        private void SearchResult(GearSlotSelect vm, int slotID, string pattern)
-        {
-            Slot slot = (Slot)slotID;
-            //vm.SlotList = RunSearch(slot, pattern);
-        }
-
-        private IEnumerable<DisplayGear> RunSearch(Slot slot, string pattern)
-        {
-            if (DataContext is RetSimUIModel retSimUIModel)
-            {
-                List<DisplayGear> list = new List<DisplayGear>();
-                if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.GearByPhases[slot].ContainsKey(1))
-                {
-                    list.AddRange(retSimUIModel.GearByPhases[slot][1].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
-                }
-                if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.GearByPhases[slot].ContainsKey(2))
-                {
-                    list.AddRange(retSimUIModel.GearByPhases[slot][2].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
-                }
-                if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.GearByPhases[slot].ContainsKey(3))
-                {
-                    list.AddRange(retSimUIModel.GearByPhases[slot][3].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
-                }
-                if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.GearByPhases[slot].ContainsKey(4))
-                {
-                    list.AddRange(retSimUIModel.GearByPhases[slot][4].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
-                }
-                if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.GearByPhases[slot].ContainsKey(5))
-                {
-                    list.AddRange(retSimUIModel.GearByPhases[slot][5].Where(d => d.Item.Name.Contains(pattern, System.StringComparison.InvariantCultureIgnoreCase)));
-                }
-                
-
-                foreach(var item in list)
-                {
-                    yield return item;
-                }
-            }
         }
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (DataContext is RetSimUIModel retSimUIModel)
             {
-                foreach (var slot in SelectorBySlot.Keys)
+                foreach (var slot in retSimUIModel.GearSlots.Keys)
                 {
-                    //ShownGear[slot] = new();
-                    /*if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.GearByPhases[slot].ContainsKey(1))
-                    {
-                        ShownGear[slot].AddRange(retSimUIModel.GearByPhases[slot][1]);
-                    }
-                    if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.GearByPhases[slot].ContainsKey(2))
-                    {
-                        ShownGear[slot].AddRange(retSimUIModel.GearByPhases[slot][2]);
-                    }
-                    if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.GearByPhases[slot].ContainsKey(3))
-                    {
-                        ShownGear[slot].AddRange(retSimUIModel.GearByPhases[slot][3]);
-                    }
-                    if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.GearByPhases[slot].ContainsKey(4))
-                    {
-                        ShownGear[slot].AddRange(retSimUIModel.GearByPhases[slot][4]);
-                    }
-                    if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.GearByPhases[slot].ContainsKey(5))
-                    {
-                        ShownGear[slot].AddRange(retSimUIModel.GearByPhases[slot][5]);
-                    }*/
-                    var ShownGear = new List<DisplayGear>();
+                    var shownGear = new List<DisplayGear>();
                     if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.GearByPhases[slot].ContainsKey(1))
                     {
-                        ShownGear.AddRange(retSimUIModel.GearByPhases[slot][1]);
+                        shownGear.AddRange(retSimUIModel.GearByPhases[slot][1]);
                     }
                     if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.GearByPhases[slot].ContainsKey(2))
                     {
-                        ShownGear.AddRange(retSimUIModel.GearByPhases[slot][2]);
+                        shownGear.AddRange(retSimUIModel.GearByPhases[slot][2]);
                     }
                     if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.GearByPhases[slot].ContainsKey(3))
                     {
-                        ShownGear.AddRange(retSimUIModel.GearByPhases[slot][3]);
+                        shownGear.AddRange(retSimUIModel.GearByPhases[slot][3]);
                     }
                     if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.GearByPhases[slot].ContainsKey(4))
                     {
-                        ShownGear.AddRange(retSimUIModel.GearByPhases[slot][4]);
+                        shownGear.AddRange(retSimUIModel.GearByPhases[slot][4]);
                     }
                     if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.GearByPhases[slot].ContainsKey(5))
                     {
-                        ShownGear.AddRange(retSimUIModel.GearByPhases[slot][5]);
+                        shownGear.AddRange(retSimUIModel.GearByPhases[slot][5]);
                     }
-                    retSimUIModel.GearSlots[slot].AllItems = ShownGear;
-                    foreach (var itemSelector in SelectorBySlot[slot])
+                    shownGear.Reverse();
+                    retSimUIModel.GearSlots[slot].AllItems = shownGear;
+
+                    /*foreach (var itemSelector in SelectorBySlot[slot])
                     {
                         /*itemSelector.SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownGear[" + slot + "]")
                         {
@@ -154,11 +85,11 @@ namespace RetSimDesktop
                             IsAsync = true
                         });*/
 
-                        itemSelector.LevelColumn.SortDirection = ListSortDirection.Descending;
-                        itemSelector.gearSlot.Items.SortDescriptions.Add(new SortDescription(itemSelector.LevelColumn.SortMemberPath, ListSortDirection.Descending));
+                        //itemSelector.LevelColumn.SortDirection = ListSortDirection.Descending;
+                        //itemSelector.gearSlot.Items.SortDescriptions.Add(new SortDescription(itemSelector.LevelColumn.SortMemberPath, ListSortDirection.Descending));
 
 
-                        if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
+                     /*   if (retSimUIModel.EnchantsBySlot.ContainsKey(slot))
                         {
                             itemSelector.SetBinding(GearSlotSelect.EnchantListProperty, new Binding("EnchantsBySlot[" + slot + "]")
                             {
@@ -166,7 +97,7 @@ namespace RetSimDesktop
                                 Mode = BindingMode.OneWay
                             });
                         }
-                    }
+                    }*/
                 }
             }
         }

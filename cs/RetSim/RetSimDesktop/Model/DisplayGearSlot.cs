@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RetSimDesktop.Model
@@ -11,6 +12,7 @@ namespace RetSimDesktop.Model
         private IEnumerable<DisplayGear> shownItems;
         private IEnumerable<DisplayGear> allItems;
         private string searchWord = "";
+        private int delay = 200;
         public IEnumerable<DisplayGear> ShownItems
         {
             get => shownItems;
@@ -32,17 +34,20 @@ namespace RetSimDesktop.Model
             get => searchWord;
             set
             {
-                if(value != null && value != searchWord)
+                if (SetProperty(ref searchWord, value))
                 {
-                    SetProperty(ref searchWord, value);
-                    FilterItems(searchWord);
+                    Task.Run(() => FilterItems(searchWord.Clone().ToString()));
                 }
             }
         }
 
         public void FilterItems(string pattern)
         {
-            ShownItems = allItems.Where(display => display.Item.Name.Contains(pattern, StringComparison.InvariantCultureIgnoreCase));
+            Thread.Sleep(delay);
+            if (searchWord == pattern)
+                ShownItems = allItems.Where(display => display.Item.Name.Contains(pattern, StringComparison.InvariantCultureIgnoreCase));
+            else
+                return;
         }
     }
 }

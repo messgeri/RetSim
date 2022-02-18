@@ -285,7 +285,8 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <local:GearPlannerInputField Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" Margin="205,0,0,0"/>
-        <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="410,0,0,0" Grid.Row="1" TextWrapping="Wrap" KeyDown="SearchBar_ConfirmChange" TextChanged="SearchBar_TextChanged"  VerticalAlignment="Center" Width="149" Height="20">
+        <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="410,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="149" Height="20">
+            <!--KeyDown="SearchBar_ConfirmChange" TextChanged="SearchBar_TextChanged"-->
         </TextBox>
         <Button Content="Sim Gear DPS" Grid.Row="1" IsEnabled="{Binding SimButtonStatus.IsSimButtonEnabled}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="20" Margin="0,0,5,5" Click="GearSim_Click" />
         <CheckBox x:Name="EnableRTS" IsChecked="False" Content="Real time search" HorizontalAlignment="Left" Margin="564,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="20" Width="126">
