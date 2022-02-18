@@ -120,14 +120,6 @@ namespace RetSimDesktop
                     {
                         EnchantComboBox.Visibility = Visibility.Hidden;
                     }
-
-                    if(SlotList.Count > 0 && SlotList[0].Item is EquippableWeapon && WeaponType.Visibility == Visibility.Collapsed)
-                    {
-                        WeaponMinDamage.Visibility = Visibility.Visible;
-                        WeaponMaxDamage.Visibility = Visibility.Visible;
-                        WeaponSpeed.Visibility = Visibility.Visible;
-                        WeaponDPS.Visibility = Visibility.Visible;
-                    }
                 }
             };
 
@@ -347,22 +339,6 @@ namespace RetSimDesktop
                 retSimUIModel.TooltipSettings.HoverItemID = 0;
             }
         }
-
-        private void gearSlot_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (DataContext is RetSimUIModel retSimUIModel)
-            {
-                retSimUIModel.TooltipSettings.OverlayControl = gearSlot;
-            }
-        }
-
-        private void gearSlot_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (DataContext is RetSimUIModel retSimUIModel)
-            {
-                retSimUIModel.TooltipSettings.OverlayControl = null;
-            }
-        }
     }
     public class QualityToBrushConverter : IValueConverter
     {
@@ -561,33 +537,6 @@ namespace RetSimDesktop
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return null;
-        }
-    }
-
-
-    public class WeaponSpeedConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return (((int)value) / 1000f).ToString("0.#");
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-    }
-
-    public class WeaponDPSConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return ((float)value).ToString("0.##");
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotSupportedException();
         }
     }
 }

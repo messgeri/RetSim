@@ -7,12 +7,12 @@
              xmlns:viewmodel="clr-namespace:RetSimDesktop.ViewModel"
              d:DataContext="{d:DesignInstance viewmodel:RetSimUIModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200" >
+             d:DesignHeight="450" d:DesignWidth="800" >
     <Grid Background="White">
         <StackPanel>
             <GroupBox Margin="5" >
                 <GroupBox.Header>
-                    <Label Padding="0" x:Name="StatPanelBoxHeader">Stats</Label>
+                    <Label Padding="0" x:Name="StatPanelBoxHeader">Level 70 Human Paladin</Label>
                 </GroupBox.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -31,23 +31,8 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Border BorderThickness="1" Margin="-3,-3,-3,0" CornerRadius="8" BorderBrush="LightGray">
-                            <Border.Style>
-                                <Style>
-                                    <Style.Triggers>
-                                        <Trigger Property="Border.IsMouseOver" Value="True">
-                                            <Setter Property="Border.Background" Value="#bee6fd" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Label x:Name="BuffIndicatorText" PreviewMouseDown="BuffIndicatorText_PreviewMouseDown" FontSize="11" Width="52" Foreground="DimGray" Padding="2,0,2,0" Content="Unbuffed" HorizontalContentAlignment="Center"/>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel Grid.Row="1">
+                    <StackPanel Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -59,7 +44,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="2">
+                    <StackPanel Grid.Row="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -71,7 +56,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="3" >
+                    <StackPanel Grid.Row="2" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -83,7 +68,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="4" >
+                    <StackPanel Grid.Row="3" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -95,7 +80,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="5" >
+                    <StackPanel Grid.Row="4" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -107,7 +92,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="6" >
+                    <StackPanel Grid.Row="5" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -119,7 +104,8 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="7" >
+
+                    <StackPanel Grid.Row="6" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -131,7 +117,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="8" >
+                    <StackPanel Grid.Row="7" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -143,7 +129,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="9" >
+                    <StackPanel Grid.Row="8" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -155,7 +141,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="10" >
+                    <StackPanel Grid.Row="9" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -167,7 +153,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="11" >
+                    <StackPanel Grid.Row="10" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -179,7 +165,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="12" >
+                    <StackPanel Grid.Row="11" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -191,7 +177,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="13" >
+                    <StackPanel Grid.Row="12" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -203,7 +189,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="14" >
+                    <StackPanel Grid.Row="13" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -215,7 +201,7 @@
                         </Grid>
                         <Separator Height="1"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="15" >
+                    <StackPanel Grid.Row="14" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2.5*" />
@@ -242,7 +228,7 @@
                     <StackPanel Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2.5*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -254,7 +240,7 @@
                     <StackPanel Grid.Row="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2.5*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -266,7 +252,7 @@
                     <StackPanel Grid.Row="2" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2.5*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -278,7 +264,7 @@
                     <StackPanel Grid.Row="3" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2.5*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
