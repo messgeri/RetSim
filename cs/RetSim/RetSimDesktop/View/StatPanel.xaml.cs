@@ -20,6 +20,7 @@ namespace RetSimDesktop
     /// </summary>
     public partial class StatPanel : UserControl
     {
+        private bool buffed = false;
         public StatPanel()
         {
             this.DataContextChanged += (o, e) =>
@@ -30,6 +31,8 @@ namespace RetSimDesktop
                     retSimUIModel.SelectedTalents.PropertyChanged += Model_PropertyChanged;
                     retSimUIModel.PlayerSettings.PropertyChanged += Model_PropertyChanged;
                     retSimUIModel.EncounterSettings.PropertyChanged += Model_PropertyChanged;
+                    retSimUIModel.SelectedBuffs.PropertyChanged += Model_PropertyChanged;
+                    retSimUIModel.SelectedConsumables.PropertyChanged += Model_PropertyChanged;
 
                     Model_PropertyChanged(this, new PropertyChangedEventArgs(""));
                 }
@@ -41,12 +44,22 @@ namespace RetSimDesktop
         {
             if (DataContext is RetSimUIModel retSimUIModel)
             {
+                List<Spell> buffs = new();
+                List<Spell> groupTalents = new();
+                List<Spell> consumables = new();
+
+                if (buffed)
+                {
+                    buffs = retSimUIModel.SelectedBuffs.GetBuffs();
+                    groupTalents = retSimUIModel.SelectedBuffs.GetGroupTalents();
+                    groupTalents.AddRange(retSimUIModel.SelectedDebuffs.GetGroupTalents());
+                    consumables = retSimUIModel.SelectedConsumables.GetConsumables();
+                }
+
                 var equipment = retSimUIModel.SelectedGear.GetEquipment();
                 var player = new Player("Brave Hero", Collections.Races[retSimUIModel.PlayerSettings.SelectedRace.ToString()], ShattrathFaction.Aldor,
                     equipment, retSimUIModel.SelectedTalents.GetTalentList());
-                FightSimulation fight = new(player, new Enemy(Collections.Bosses[retSimUIModel.EncounterSettings.EncounterID]), new EliteTactic(0), new List<Spell>(), new List<Spell>(), new List<Spell>(), new List<Spell>(), 0, 0, new List<Spell>(), new List<int>());
-
-                StatPanelBoxHeader.Content = "Level 70 " + Collections.Races[retSimUIModel.PlayerSettings.SelectedRace.ToString()].Name + " Paladin";
+                FightSimulation fight = new(player, new Enemy(Collections.Bosses[retSimUIModel.EncounterSettings.EncounterID]), new EliteTactic(0), groupTalents, buffs, new List<Spell>(), consumables, 0, 0, new List<Spell>(), new List<int>());
 
                 Stamina.Content = player.Stats[StatName.Stamina].Value;
                 Health.Content = player.Stats[StatName.Health].Value;
@@ -188,6 +201,21 @@ namespace RetSimDesktop
                 }
 
             }
+        }
+
+        private void BuffIndicatorText_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            buffed = !buffed;
+            if (buffed)
+            {
+                BuffIndicatorText.Content = "Buffed";
+            }
+            else
+            {
+                BuffIndicatorText.Content = "Unbuffed";
+            }
+
+            Model_PropertyChanged(null, null);
         }
     }
 }
