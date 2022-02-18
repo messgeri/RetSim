@@ -36,6 +36,7 @@ namespace RetSimDesktop.ViewModel
         private Dictionary<WeaponType, Dictionary<int, List<DisplayWeapon>>> _WeaponsByPhases;
         private Dictionary<int, DisplayWeapon> _AllWeapons;
         private Dictionary<Slot, List<Enchant>> _EnchantsBySlot;
+        private Dictionary<Slot, DisplayGearSlot> _gearSlots;
 
         public RetSimUIModel()
         {
@@ -141,6 +142,48 @@ namespace RetSimDesktop.ViewModel
             {
                 HoverItemID = 0,
             };
+
+            _gearSlots = new();
+            _gearSlots.Add(Slot.Head, new());
+            _gearSlots.Add(Slot.Neck, new());
+            _gearSlots.Add(Slot.Shoulders, new());
+            _gearSlots.Add(Slot.Back, new());
+            _gearSlots.Add(Slot.Chest, new());
+            _gearSlots.Add(Slot.Wrists, new());
+            _gearSlots.Add(Slot.Hands, new());
+            _gearSlots.Add(Slot.Waist, new());
+            _gearSlots.Add(Slot.Legs, new());
+            _gearSlots.Add(Slot.Feet, new());
+            _gearSlots.Add(Slot.Finger, new());
+            _gearSlots.Add(Slot.Trinket, new());
+            _gearSlots.Add(Slot.Relic, new());
+
+            foreach(var slot in _gearSlots.Keys)
+            {
+                var ShownGear = new List<DisplayGear>();
+                if (SelectedPhases.Phase1Selected && GearByPhases[slot].ContainsKey(1))
+                {
+                    ShownGear.AddRange(GearByPhases[slot][1]);
+                }
+                if (SelectedPhases.Phase2Selected && GearByPhases[slot].ContainsKey(2))
+                {
+                    ShownGear.AddRange(GearByPhases[slot][2]);
+                }
+                if (SelectedPhases.Phase3Selected && GearByPhases[slot].ContainsKey(3))
+                {
+                    ShownGear.AddRange(GearByPhases[slot][3]);
+                }
+                if (SelectedPhases.Phase4Selected && GearByPhases[slot].ContainsKey(4))
+                {
+                    ShownGear.AddRange(GearByPhases[slot][4]);
+                }
+                if (SelectedPhases.Phase5Selected && GearByPhases[slot].ContainsKey(5))
+                {
+                    ShownGear.AddRange(GearByPhases[slot][5]);
+                }
+                ShownGear.Reverse();
+                _gearSlots[slot].AllItems = ShownGear;
+            }
         }
 
         public void Reset()
@@ -258,6 +301,13 @@ namespace RetSimDesktop.ViewModel
         {
             get { return _EnchantsBySlot; }
             set { _EnchantsBySlot = value; }
+        }
+
+        [JsonIgnore]
+        public Dictionary<Slot, DisplayGearSlot> GearSlots
+        {
+            get { return _gearSlots; }
+            set { _gearSlots = value; }
         }
 
         [JsonIgnore]

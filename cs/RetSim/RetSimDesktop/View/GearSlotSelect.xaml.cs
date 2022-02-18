@@ -40,30 +40,24 @@ namespace RetSimDesktop
                 GearSearched?.Invoke(this, SlotID, SearchBar.Text);
             }
         }
-        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
+            /*if (EnableRTS.IsChecked != null && EnableRTS.IsChecked.Value == true)
             {
                 GearSearched?.Invoke(this, SlotID, SearchBar.Text);
-            }
-        }
-
-        private bool SearchItems(object e)
-        {
-            var obj = e as DisplayGear;
-            if(obj != null)
+            }*/
+            if(DataContext is RetSimUIModel viewmodel)
             {
-                if(obj.Item.Name.Contains(SearchBar.Text)) return true;
-                else return false;
+                Slot slot = (Slot)SlotID;
+                viewmodel.GearSlots[slot].FilterItems(SearchBar.Text);
             }
-            return false;
         }
 
         public static readonly DependencyProperty SlotListProperty = DependencyProperty.Register(
             "SlotList",
             typeof(IEnumerable<DisplayGear>),
             typeof(GearSlotSelect));
-
+        
         public List<Enchant> EnchantList
         {
             get => (List<Enchant>)GetValue(EnchantListProperty);
@@ -113,15 +107,31 @@ namespace RetSimDesktop
                     {
                         EnchantComboBox.Visibility = Visibility.Visible;
                     }
+                    Binding binding = new Binding()
+                    {
+                        Source = DataContext,
+                        Path = new PropertyPath("GearSlots["+(Slot)SlotID+"].ShownItems"),
+                        Mode = BindingMode.TwoWay,
+                        IsAsync = true
+                    };
+                    gearSlot.SetBinding(DataGrid.ItemsSourceProperty, binding);
+
+                    Binding text = new Binding()
+                    {
+                        Source = DataContext,
+                        Path = new PropertyPath("GearSlots[" + (Slot)SlotID + "].SearchWord"),
+                        Mode = BindingMode.TwoWay,
+                    };
+                    SearchBar.SetBinding(TextBlock.TextProperty, text);
                 }
             };
             
-            gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
+            /*gearSlot.SetBinding(DataGrid.ItemsSourceProperty, new Binding("SlotList")
             {
                 Source = this,
                 Mode = BindingMode.TwoWay,
                 IsAsync = true
-            });
+            });*/
 
             gearSlot.SetBinding(DataGrid.SelectedItemProperty, new Binding("SelectedItem")
             {
@@ -172,7 +182,7 @@ namespace RetSimDesktop
             if (!gearSimWorker.IsBusy && DataContext is RetSimUIModel retSimUIModel)
             {
                 retSimUIModel.SimButtonStatus.IsSimButtonEnabled = false;
-                gearSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>(retSimUIModel, SlotList, SlotID));
+                gearSimWorker.RunWorkerAsync(new Tuple<RetSimUIModel, IEnumerable<DisplayGear>, int>(retSimUIModel, retSimUIModel.GearSlots[(Slot)SlotID].AllItems, SlotID));
             }
         }
 
@@ -289,9 +299,10 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Checked(object sender, RoutedEventArgs e)
         {
-            if (SlotList != null)
+            if (DataContext is RetSimUIModel viewmodel)
             {
-                foreach (var displayItem in SlotList)
+                Slot slot = (Slot)SlotID;
+                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
                 {
                     displayItem.EnabledForGearSim = true;
                 }
@@ -300,9 +311,10 @@ namespace RetSimDesktop
 
         private void ChkSelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (SlotList != null)
+            if (DataContext is RetSimUIModel viewmodel)
             {
-                foreach (var displayItem in SlotList)
+                Slot slot = (Slot)SlotID;
+                foreach (var displayItem in viewmodel.GearSlots[slot].ShownItems)
                 {
                     displayItem.EnabledForGearSim = false;
                 }
@@ -332,7 +344,7 @@ namespace RetSimDesktop
                     {
                         retSimUIModel.TooltipSettings.HoverItemID = displayItem.Item.ID;
                     }
-
+                    /*
                     foreach (var item in SlotList)
                     {
                         if (item.Item.Slot == Slot.Finger)
@@ -340,7 +352,7 @@ namespace RetSimDesktop
                             retSimUIModel.TooltipSettings.RingEnchant = SelectedEnchant;
                         }
                         break;
-                    }
+                    }*/
                 }
             }
         }
