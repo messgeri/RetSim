@@ -26,7 +26,6 @@ namespace RetSimDesktop
                 if (DataContext is RetSimUIModel retSimUIModel)
                 {
                     retSimUIModel.SelectedPhases.PropertyChanged += Model_PropertyChanged;
-                    Model_PropertyChanged(this, new PropertyChangedEventArgs(""));
                 }
             };
             ShownWeapons = new();
@@ -35,70 +34,43 @@ namespace RetSimDesktop
             SelectorByType.Add(WeaponType.Mace, MaceSelect);
             SelectorByType.Add(WeaponType.Axe, AxeSelect);
             SelectorByType.Add(WeaponType.Polearm, PolearmSelect);
+
+            foreach(var selector in SelectorByType.Keys)
+            {
+                SelectorByType[selector].SetBindingParameters((int)selector, true);
+            }
         }
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (DataContext is RetSimUIModel retSimUIModel)
             {
-                foreach (var type in SelectorByType.Keys)
+                foreach (var slot in SelectorByType.Keys)
                 {
-                    ShownWeapons[type] = new();
-                    if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.WeaponsByPhases[type].ContainsKey(1))
+                    var shownGear = new List<DisplayGear>();
+                    if (retSimUIModel.SelectedPhases.Phase1Selected && retSimUIModel.WeaponsByPhases[slot].ContainsKey(1))
                     {
-                        ShownWeapons[type].AddRange(retSimUIModel.WeaponsByPhases[type][1]);
+                        shownGear.AddRange(retSimUIModel.WeaponsByPhases[slot][1]);
                     }
-                    if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.WeaponsByPhases[type].ContainsKey(2))
+                    if (retSimUIModel.SelectedPhases.Phase2Selected && retSimUIModel.WeaponsByPhases[slot].ContainsKey(2))
                     {
-                        ShownWeapons[type].AddRange(retSimUIModel.WeaponsByPhases[type][2]);
+                        shownGear.AddRange(retSimUIModel.WeaponsByPhases[slot][2]);
                     }
-                    if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.WeaponsByPhases[type].ContainsKey(3))
+                    if (retSimUIModel.SelectedPhases.Phase3Selected && retSimUIModel.WeaponsByPhases[slot].ContainsKey(3))
                     {
-                        ShownWeapons[type].AddRange(retSimUIModel.WeaponsByPhases[type][3]);
+                        shownGear.AddRange(retSimUIModel.WeaponsByPhases[slot][3]);
                     }
-                    if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.WeaponsByPhases[type].ContainsKey(4))
+                    if (retSimUIModel.SelectedPhases.Phase4Selected && retSimUIModel.WeaponsByPhases[slot].ContainsKey(4))
                     {
-                        ShownWeapons[type].AddRange(retSimUIModel.WeaponsByPhases[type][4]);
+                        shownGear.AddRange(retSimUIModel.WeaponsByPhases[slot][4]);
                     }
-                    if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.WeaponsByPhases[type].ContainsKey(5))
+                    if (retSimUIModel.SelectedPhases.Phase5Selected && retSimUIModel.WeaponsByPhases[slot].ContainsKey(5))
                     {
-                        ShownWeapons[type].AddRange(retSimUIModel.WeaponsByPhases[type][5]);
+                        shownGear.AddRange(retSimUIModel.WeaponsByPhases[slot][5]);
                     }
-
-                    SelectorByType[type].SetBinding(GearSlotSelect.SlotListProperty, new Binding("ShownWeapons[" + type + "]")
-                    {
-                        Source = this,
-                        Mode = BindingMode.OneWay
-                    });
-
-                    SelectorByType[type].LevelColumn.SortDirection = ListSortDirection.Descending;
-                    SelectorByType[type].gearSlot.Items.SortDescriptions.Add(new SortDescription(SelectorByType[type].LevelColumn.SortMemberPath, ListSortDirection.Descending));
-
-                    SelectorByType[type].SetBinding(GearSlotSelect.EnchantListProperty, new Binding("EnchantsBySlot[" + Slot.Weapon + "]")
-                    {
-                        Source = DataContext,
-                        Mode = BindingMode.OneWay
-                    });
+                    shownGear.Reverse();
+                    retSimUIModel.Weapons[slot].AllItems = shownGear;
                 }
-
-                AllShownWeapons = new();
-                foreach (var weapons in ShownWeapons.Values)
-                {
-                    AllShownWeapons.AddRange(weapons);
-                }
-                AllWeaponSelect.SetBinding(GearSlotSelect.SlotListProperty, new Binding("AllShownWeapons")
-                {
-                    Source = this,
-                    Mode = BindingMode.OneWay
-                });
-                AllWeaponSelect.LevelColumn.SortDirection = ListSortDirection.Descending;
-                AllWeaponSelect.gearSlot.Items.SortDescriptions.Add(new SortDescription(AllWeaponSelect.LevelColumn.SortMemberPath, ListSortDirection.Descending));
-
-                AllWeaponSelect.SetBinding(GearSlotSelect.EnchantListProperty, new Binding("EnchantsBySlot[" + Slot.Weapon + "]")
-                {
-                    Source = DataContext,
-                    Mode = BindingMode.OneWay
-                });
             }
         }
     }

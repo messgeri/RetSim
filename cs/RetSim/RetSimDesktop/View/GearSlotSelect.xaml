@@ -86,8 +86,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket1, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket1, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket1}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem1}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -96,8 +96,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket2, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket2, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket2}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem2}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -106,8 +106,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" CornerRadius="1"
-                                BorderBrush="{Binding Item.Socket3, Converter={StaticResource SocketToSocketColorBrushConverter}}">
-                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Item.Socket3, Converter={StaticResource SocketToImageConverter}}" />
+                                BorderBrush="{Binding Socket3}">
+                                <Image Width="14" Height="14" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Gem3}" />
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -115,7 +115,7 @@
                 <DataGridTemplateColumn MinWidth="48" CanUserReorder="False" CanUserSort="False" Header="Bonus">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item, Converter={StaticResource SocketBonusConverter}}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
+                            <TextBlock Text="{Binding SocketBonus}" Foreground="{Binding Item, Converter={StaticResource SocketBonusActiveConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -346,7 +346,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <local:GearPlannerInputField Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200"/>
+        <local:GearPlannerInputField Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="200"/>
+        <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="410,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="149" Height="20"/>
         <Button Content="Sim Gear DPS" Grid.Row="1" IsEnabled="{Binding SimButtonStatus.IsSimButtonEnabled}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="20" Margin="0,0,5,5" Click="GearSim_Click" />
     </Grid>
     
